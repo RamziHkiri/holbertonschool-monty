@@ -17,14 +17,24 @@ void push(stack_t **stack, unsigned int line_number)
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
 	{
+		free(new);
+		free(monty2);
 		fprintf(stderr, "Error: malloc failed\n");
 		free_stack(stack);
 		exit(EXIT_FAILURE);
 	}
+	if (monty2 == NULL || _parseArg(monty2) == 0)
+	{
+		free(new);
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		free_stack(stack);
+		exit(EXIT_FAILURE);
+	}
+	if ((isdigit(*monty2) != 0) || (*monty2 == '-' && isdigit(monty2[1])))
+		new->n = atoi(monty2);
 
 	new->next = *stack;
 	new->prev = NULL;
-	new->n = line_number;
 	if (*stack)
 		(*stack)->prev = new;
 	*stack = new;
@@ -64,4 +74,22 @@ void pall(stack_t **stack, unsigned int line_number)
 		printf("%d\n", temp->n);
 		temp = temp->next;
 	}
+}
+
+/**
+ * _parseArg - checks if the argument of push is a integer
+ * @c: argument
+ * Return: 1 on Success, or 0 on failure
+ */
+int _parseArg(char *c)
+{
+	int idx = 0;
+
+	while (((c[idx] <= '9' && c[idx] >= '0') || (c[0] == '-')) && c != 0)
+	{
+		if (c[idx + 1] == 0)
+			return (1);
+		idx++;
+	}
+	return (0);
 }
