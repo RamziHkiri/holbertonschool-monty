@@ -15,6 +15,7 @@
  * Description: doubly linked list node structure
  * for stack, queues, LIFO, FIFO
  */
+char *monty2;
 typedef struct stack_s
 {
         int n;
@@ -38,4 +39,5 @@ typedef struct instruction_s
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void free_stack(stack_t **stack);
+int _parseArg(char *c);
 #endif
