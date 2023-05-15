@@ -8,7 +8,7 @@
 int main(int argc, char *argv[])
 {
 	char *red = NULL;
-	char *monty = NULL;
+	char *monty1 = NULL;
 	unsigned int line_number = 0;
 	size_t leng = 0;
 	FILE *mtf;
@@ -28,19 +28,20 @@ int main(int argc, char *argv[])
 	while (getline(&red, &leng, mtf) != -1)
 	{
 		line_number++;
-		monty = strtok(red, " \t\n\r");
+		monty1 = strtok(red, " \t\n\r");
 
-		if (strcmp(monty, "push") == 0)
+		if (strcmp(monty1, "push") == 0)
 		{
+			monty2 = strtok(NULL, " \t\n\r");
 			push(&stack, line_number);
 		}
-		if (strcmp(monty, "pall") == 0)
+		if (strcmp(monty1, "pall") == 0)
 		{
 			pall(&stack, line_number);
 		}
 	}
 	free_stack(&stack);
-	free(monty);
+	free(monty1);
 	fclose(mtf);
 	return (0);
 }
